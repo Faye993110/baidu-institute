@@ -42,7 +42,7 @@ var aqiData = [
  }
  for(var i=0;i<aqi.length;i++){
     for(var m=i+1;m<aqi.length;m++){
-    	if(aqi[i][1]>aqi[m][1]){
+    	if(aqi[i][1]<aqi[m][1]){
     		  var temp;
     		  temp =aqi[i];
     		  aqi[i]=aqi[m];
@@ -52,9 +52,10 @@ var aqiData = [
  }
 
  for(var i=0;i<aqi.length;i++){
- 	var m=i+1;
+ 
  	var v_li=document.createElement("li");
- 	v_li.innerHTML="第"+m+"名："+aqi[i];
+ 	n=["一","二","三","四"];
+ 	v_li.innerHTML="第"+n[i]+"名："+aqi[i];
  	document.getElementById("aqi-list").appendChild(v_li);
  }
    
