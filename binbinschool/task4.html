@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task4</title>
+	<style type="text/css">
+       .num{
+       	display: block;
+       	float: left;
+       	background-color: #F71A1A;
+       	color: white;
+       	padding: 5px;
+       	margin-left:5px;
+       }
+       #number{
+       	margin-top:10px;
+       }
+       #left-out{
+       	margin-left:40px;
+       }
+	</style>
+</head>
+<body>
+   <div id="wrapper">
+	        <input  id="in" type="text" name="">
+	        <button id="left-in">左侧入</button>
+	        <button id="right-in">右侧入</button>
+	        <button id="left-out">左侧出</button>
+	        <button id="right-out">右侧出</button>
+        <div id="number">
+        <span class="num">10</span>
+        <span class="num">3</span>
+        <span class="num">7</span>
+        <span class="num">12</span>
+        <span class="num">11</span>
+        <span class="num">30</span>
+        </div>
+   </div>
+
+   <script type="text/javascript">
+    
+    function getArray(){//得到页面数组
+    	var num=[];
+    	var m=document.getElementsByTagName("span");
+        for(var i=0;i<m.length;i++){
+             num[i]=m[i].innerHTML;
+        }
+        return num;
+    }
+    function leftIn(){//左边插入
+    	var number=document.getElementById("in").value;
+    	var data=getArray();
+        data.splice(0,0,number);//将输入的值插入数组最前面
+        var child=document.createElement("span");
+        child.className="num";
+        child.innerHTML=number;
+        var parent=document.getElementById("number");
+        parent.insertBefore(child,parent.firstChild);
+    } 
+    function rightIn(){//右边插入
+    	var number=document.getElementById("in").value;
+    	var data=getArray();
+        data.concat(number);
+        var child=document.createElement("span");
+        child.className="num";
+        child.innerHTML=number;
+        var parent=document.getElementById("number");
+        parent.appendChild(child);
+    } 
+    function leftOut(){
+        var parent=document.getElementById("number");
+        var child=document.getElementsByTagName("span");
+        
+        if(child.length!=0){
+        	parent.removeChild(child[0]);
+        }
+    }
+    function rightOut(){
+    	var parent=document.getElementById("number");
+    	var child=document.getElementsByTagName("span");
+    	if(child.length!=0){
+    		 parent.removeChild(child[child.length-1]);
+    	}
+    }
+
+    function init(){
+    	
+    	document.getElementById("left-in").onclick=leftIn;
+    	document.getElementById("right-in").onclick=rightIn;
+    	document.getElementById("left-out").onclick=leftOut;
+    	document.getElementById("right-out").onclick=rightOut;
+    }
+    init();
+   </script>
+</body>
+</html>
