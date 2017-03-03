@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task5</title>
+	<style type="text/css">
+       .num{
+       	display: inline-block;
+        vertical-align: bottom;
+       	background-color: #F71A1A;
+       	color: white;
+       	padding: 5px;
+       	width: 15px;
+        margin:10px 10px;
+       }
+       #number{
+       	margin-top:10px;
+        width: auto;
+       }
+       #left-out{
+       	margin-left:40px;
+       }
+
+	</style>
+</head>
+<body>
+   <div id="wrapper">
+	        <input  id="in" type="text" name="">
+	        <button id="add">添加</button>
+	        <button id="left-out">左侧出</button>
+	        <button id="right-out">右侧出</button>
+        <div id="number">
+          <span class="num">10</span>
+          <span class="num">3</span>
+          <span class="num">7</span>
+          <span class="num">12</span>
+          <span class="num">11</span>
+          <span class="num">30</span>
+        </div>
+       
+   </div>
+
+   <script type="text/javascript">
+    
+    function getArray(){//得到页面数组
+    	var num=[];
+    	var m=document.getElementsByTagName("span");
+      for(var i=0;i<m.length;i++){
+           num[i]=parseInt(m[i].innerHTML);
+      }
+        return num;
+    }
+    function renderArray(data){//冒泡排序
+       for(var i=0;i<data.length;i++){
+        for(var m=i;m<data.length;m++){
+          if(data[i]>data[m]){//每次把小的换到前面
+            temp=data[i];
+            data[i]=data[m];
+            data[m]=temp;
+          }
+        }
+       }
+       return data;
+    }
+
+    function add(){//在队列里添加数值
+      var number=document.getElementById("in").value;
+          number=parseInt(number);
+      var v_span=document.getElementsByTagName("span");
+      if(v_span.length==60){
+        alert("长度已达到60，不能再添加");
+      }else{
+        if(number>10&&number<100){
+            var data=getArray();
+                data=data.concat(number);
+                data=renderArray(data);
+                var child=document.createElement("span");
+                document.getElementById("number").appendChild(child);
+                draw(data);
+        }else{
+          alert("请输入10-100的数字");
+        }
+      }
+     
+    } 
+   
+    function leftOut(){
+        var parent=document.getElementById("number");
+        var child=document.getElementsByTagName("span");
+        if(child.length!=0){
+        	parent.removeChild(child[0]);
+        }
+    }
+    function rightOut(){
+    	var parent=document.getElementById("number");
+    	var child=document.getElementsByTagName("span");
+    	if(child.length!=0){
+    		 parent.removeChild(child[child.length-1]);
+    	}
+    }
+    function draw(data){
+      var lis=document.getElementsByTagName("span");
+      console.log(lis);
+      for(var i=0;i<data.length;i++){
+           var temp=data[i];
+           data[i]=data[i]+20;
+           var str=data[i]+"px";
+           lis[i].style.height=str;
+           lis[i].className="num";
+           lis[i].innerHTML=temp;
+      }
+    }
+    function init(){
+      var data=getArray();
+          data=renderArray(data);
+          draw(data);
+    	document.getElementById("add").onclick=add;
+    	document.getElementById("left-out").onclick=leftOut;
+    	document.getElementById("right-out").onclick=rightOut;
+    }
+    init();
+   </script>
+</body>
+</html>
