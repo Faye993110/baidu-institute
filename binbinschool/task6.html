@@ -22,6 +22,14 @@
      .found{
      	background-color: #ff0;
      }
+     .left{
+     	float: left;
+     	background-color: #BDC4C6;
+     	margin-right: 15px;
+     	margin-top:15px;
+     	display: block;
+     }
+
     </style>
 </head>
 <body>
@@ -30,24 +38,83 @@
          <textarea id="incoming" cols="150" rows="10"></textarea>
          <p>查询 :<input id="pattern" type="text" name=""></p>
      </form>    
-     <button id="searchSubmit">查询</button>
-     <div id="searchResult"></div>
+            <button id="left-in">左侧入</button>
+	        <button id="right-in">右侧入</button>
+	        <button id="left-out">左侧出</button>
+	        <button id="right-out">右侧出</button>
+            <button id="searchSubmit">查询</button>
+     <div id="searchResult">
+
+     </div>
  <script type="text/javascript">
-    document.getElementById("searchSubmit").onclick=function(){
-    	//获取要查询的字符
-    	var pattern=document.getElementById("pattern").value;
-    	var re=new RegExp(pattern,"g");
 
-    	//获取textarea的内容
-    	var searchString=document.getElementById("incoming").value;
+       function search(){
+        	//获取要查询的字符
+        	var pattern=document.getElementById("pattern").value;
+    	    var re=new RegExp(pattern,"g");
 
-    	//替换
+             //获取textarea的内容
+    	     var searchString=document.getElementsByClassName("left");
 
-    	var resultString=searchString.replace(re,"<span class='found'>$&</span>");
+    	     //替换
+    	     for(var i=0;i<searchString.length;i++){
+    	     	var str =searchString[i].innerHTML;
+                var resultString=str.replace(re,"<span class='found'>$&</span>");
+                console.log(resultString);
+                searchString[i].innerHTML=resultString;
+    	     }
+    	    //插入到页面
+    	     
+        }
 
-    	//插入到页面
-    	 document.getElementById("searchResult").innerHTML=resultString;
-    	 }
+
+        function leftIn(){
+        	//获取输入的内容
+        	var searchString=document.getElementById("incoming").value;
+        	var child=document.createElement("span");
+            child.className="left";
+            child.innerHTML=searchString;
+            var parent=document.getElementById("searchResult");
+            parent.insertBefore(child,parent.firstChild);
+
+        }
+         function rightIn(){
+        	//获取输入的内容
+        	var searchString=document.getElementById("incoming").value;
+        	var child=document.createElement("span");
+            child.className="left";
+            child.innerHTML=searchString;
+            var parent=document.getElementById("searchResult");
+            parent.appendChild(child);
+
+        }
+         function leftOut(){
+        var parent=document.getElementById("searchResult");
+        var child=document.getElementsByTagName("span");
+        
+        if(child.length!=0){
+        	parent.removeChild(child[0]);
+        }
+    }
+    function rightOut(){
+    	var parent=document.getElementById("searchResult");
+    	var child=document.getElementsByTagName("span");
+    	if(child.length!=0){
+    		 parent.removeChild(child[child.length-1]);
+    	}
+    }
+       function init(){
+       	     document.getElementById("left-in").onclick=leftIn;
+       	     document.getElementById("right-in").onclick=rightIn;
+       	     document.getElementById("left-out").onclick=leftOut;
+    	     document.getElementById("right-out").onclick=rightOut;
+    	     document.getElementById("searchSubmit").onclick=search;
+       }
+       init();
+    	
+
+    	
+    	
 
 
 
