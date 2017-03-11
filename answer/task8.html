@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task8</title>
+	<style type="text/css">
+       .container{
+       	width: 100%;
+       	max-width: 1200px;
+       	margin: 20px;
+       }
+      .row:before,.row:after{
+      	content: "";
+      	display: table;
+      	clear: both;
+      }
+      [class*='col-']{
+      	float: left;
+      	height: 70px;
+        padding: 10px;
+      }
+      .col-md-1{ width: 8.33% ;}
+      .col-md-2{ width: 16.66% ;}
+      .col-md-3{ width: 25% ;}
+      .col-md-4{ width: 33.33% ;}
+      .col-md-6{ width: 50% ;}
+      .container *{
+          box-sizing:border-box;
+      }
+      .content{
+      	height: 50px;
+      	
+      	width: auto;
+      	border:1px solid #999;
+      	background-color: #eee;
+      }
+      @media (max-width: 768px){
+          .col-xs-6{
+          	width: 50%;
+          }
+          .col-xs-12{
+          	width: 100%;
+          }
+          .col-xs-3{
+          	width:25%;
+          }
+          .col-xs-2{
+          	width: 16.66%;
+          }
+          .col-xs-8{
+          	width: 66.66%;
+          }
+      }
+	</style>
+</head>
+<body>
+<div class="container">
+   <div class="row">
+      <div class="col-md-4 col-xs-6">
+          <div class="content"></div>
+      </div>
+      <div class="col-md-4 col-xs-6">
+          <div class="content"></div>
+      </div>
+      <div class="col-md-4 col-xs-12">
+          <div class="content"></div>
+      </div>
+   
+      <div class="col-md-3 col-xs-3">
+          <div class="content"></div>
+      </div>
+      <div class="col-md-6 col-xs-6">
+          <div class="content"></div>
+      </div>
+      <div class="col-md-3 col-xs-3">
+          <div class="content"></div>
+      </div>
+    
+      <div class="col-md-1 col-xs-2">
+          <div class="content"></div>
+      </div>
+      <div class="col-md-1 col-xs-2">
+          <div class="content"></div>
+      </div>
+      <div class="col-md-2 col-xs-8">
+          <div class="content"></div>
+      </div>
+      <div class="col-md-2 col-xs-3">
+          <div class="content"></div>
+      </div>
+      <div class="col-md-6 col-xs-3">
+          <div class="content"></div>
+      </div>
+    </div>
+ </div>
+</body>
+</html>
