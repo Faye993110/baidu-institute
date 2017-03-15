@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task8</title>
+	<style type="text/css">
+      .wrapper{
+      	width: 90%;
+      	border:1px solid black;
+        height: 400px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 10px;
+      }
+     .car{
+     	width: 40%;
+     	height: 60%;
+      	border:1px solid black;
+      	display: flex;
+      	justify-content: space-around;
+        align-items: center;
+     }
+     .car .apple{
+     	width:42%;
+     	height: 60%;
+     	border:1px solid black;
+     	display: flex;
+      	justify-content: space-around;
+        align-items: center;
+     }
+     .car .apple .pear,.pig,.cola,.soccer{
+     	width: 18%;
+     	border:1px solid black;
+     	height: 60%;
+     }
+
+     .car .phone{
+     	width:11%;
+     	height: 60%;
+     	border:1px solid black;
+     }
+     .car .nothing{
+     	width:27%;
+     	height: 60%;
+     	border:1px solid black;
+     	display: flex;
+      	justify-content: space-around;
+        align-items: center;
+     }
+     .car .nothing .book,.school{
+         width: 30%;
+         border:1px solid black;
+         height: 60%;
+     }
+
+     .note{
+     	width: 40%;
+     	height: 60%;
+     	border:1px solid black;
+     	display: flex;
+      	justify-content: space-around;
+        align-items: center;
+     }
+     .note .human,.program{
+     	width: 45%;
+     	height: 60%;
+     	border:1px solid black;
+     	display: flex;
+      	justify-content: space-around;
+        align-items: center;
+     }
+     .note .human .code,.operate,.man{
+     	width: 25%;
+     	height: 60%;
+     	border:1px solid black;
+     }
+     .note .program .bement,.grass{
+        width:35%;
+     	height: 60%;
+     	border:1px solid black;
+     }
+     .note .program .bement{
+     	display: flex;
+      	justify-content: space-around;
+        align-items: center;
+     }
+     .cat{
+     	width:30%;
+     	height: 60%;
+     	border:1px solid black;
+     }
+     .fish{
+     	width: 10%;
+     	height: 60%;
+     	border:1px solid black;
+     }
+     input{
+     	margin-top: 50px;
+     }
+	</style>
+</head>
+<body>
+   <div class="wrapper">Super
+      <div class="car">Car
+          <div class="apple">Apple
+             <div class="pear">Pear</div>
+             <div class="pig">Pig</div>
+             <div class="cola">Cola</div>
+             <div class="soccer">Soccer</div>
+          </div>
+          <div class="phone">Phone</div>
+          <div class="nothing">Nothing
+             <div class="book">Book</div>
+             <div class="school">School</div>
+          </div>
+      </div>
+      <div class="note">Note
+          <div class="human">Human
+              <div class="code">Code</div>
+              <div class="operate">Operate</div>
+              <div class="man">Man</div>
+          </div>
+          <div class="program">Program
+               <div class="bement">Bement
+                   <div class="cat">Cat</div>
+               </div>
+               <div class="grass">Grass</div>
+          </div>
+      </div>
+      <div class="fish">Fish</div>
+   </div>
+      <label>请输入想查询的：<input id="input" type="text" name=""></label>
+      <input type="button" id="search" value="查询">
+      <input type="button" id="order" value="遍历">
+
+   <script type="text/javascript">
+    
+    var search=document.getElementById("search");
+    var order=document.getElementById("order");
+    var treeNode=document.getElementsByClassName("wrapper")[0];
+    var list=[];
+    var timer=null;
+
+
+    function Order(node){//层次遍历树中的每一个节点
+    	if(node!=null){
+            list.push(node);
+            for(var i=0;i<node.children.length;i++){
+            	if(node.children[i].nodeType==1){//判断该节点是否是元素类型，只有类型，nodeType的值为1
+            		Order(node.children[i]);
+            	}
+            }
+    	}
+    }
+
+    //改变list中的块颜色，参数a用来判断是否带有查询功能
+    //a=1，则查询
+    //a=0，则只遍历
+    function show(a){
+       var i=0;
+       list[i].style.backgroundColor="#fff";
+       var input=document.getElementById("input").value;
+       timer=setInterval(function(){
+          i++;
+          if(i<=list.length){
+            var content=list[i-1].firstChild.nodeValue.replace(/(^\s*)|(\s*$)/g,"");//将节点值的前后空格去掉
+              if(input==content&&a==1&&content){
+                if(i>=2){//将上一个节点变为白色
+                  list[i-2].style.backgroundColor="#fff";
+                }
+                for(var j=0;j<list[i-1].children.length;j++){//将当前节点的子节点变为白色
+                  list[i-1].children[j].style.backgroundColor="#fff";
+                }
+                list[i-1].style.backgroundColor="red";//设置当前匹配到查找内容的节点为红色
+                a=2;
+              }else{
+                if(i>=2){
+                  list[i-2].style.backgroundColor="#fff";
+                }
+                for(var j=0;j<list[i-1].children.length;j++){
+                  list[i-1].children[j].style.backgroundColor="#fff";
+                }
+                list[i-1].style.backgroundColor="blue";
+              }
+          }else{
+            clearTimeout(timer);
+            list[list.length-1].style.backgroundColor="#fff";
+            if(a==1){
+              alert("not found!");
+            }
+          }
+       },500);
+    }
+    //重置函数，将数组重置
+    function reset(){
+      clearTimeout(timer);
+      list=[];
+
+      var divs=document.getElementsByTagName("div");
+      for(var i=0;i<divs.length;i++){
+        divs[i].style.backgroundColor="#fff";
+      }
+    }
+    //查询函数
+    search.addEventListener("click",function(){
+      reset();
+      Order(treeNode);
+      show(1);
+    })
+ //层次遍历
+   order.addEventListener("click",function(){
+      reset();
+      Order(treeNode);
+      show(0);
+    })
+
+
+
+   </script>
+</body>
+</html>
