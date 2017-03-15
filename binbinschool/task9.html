@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task9</title>
+	<style type="text/css">
+      .one{
+      	width: 90%;
+      	border:1px solid black;
+        height: 400px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 8px;
+      }
+     .two{
+     	width: 40%;
+     	height: 60%;
+      	border:1px solid black;
+      	display: flex;
+      	justify-content: space-around;
+        align-items: center;
+     }
+     .two:last-child{
+      width:15%;
+      height: 60%;
+        border:1px solid black;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+     }
+     .three{
+     	width:45%;
+     	height: 60%;
+     	border:1px solid black;
+     	display: flex;
+      justify-content: space-around;
+      align-items: center;
+     }
+     .one:first-child .two:first-child .three:first-child{
+      width:45%;
+      height: 60%;
+      border:1px solid black;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+     }
+     .one:first-child .two:first-child .three:nth-child(2){
+      width: 8%;
+      height: 60%;
+
+     }
+     .one:first-child .two:first-child .three:nth-child(3){
+      width: 39%;
+      height: 60%;
+     }
+
+     .four{
+     	width: 20%;
+     	border:1px solid black;
+     	height: 60%;
+      justify-content: space-around;
+      align-items: center;
+     }
+      .one:first-child .two:nth-child(2) .three:first-child .four:nth-child(2){
+      width: 25%;
+     }
+      .one:first-child .two:nth-child(2) .three:nth-child(2) .four:first-child{
+      width: 50%;
+     }
+     .five{
+     	width:30%;
+     	height: 60%;
+     	border:1px solid black;
+      margin-left:20%;
+     }
+     #delete{
+
+     }
+     input{
+     	margin-top: 50px;
+     }
+	</style>
+</head>
+<body >
+   <section id="content">
+   <div class="one">Super
+      <div class="two">Car
+          <div class="three">Apple
+             <div class="four">Pear</div>
+             <div class="four">Pig</div>
+             <div class="four">Cola</div>
+             <div class="four">Soccer</div>
+          </div>
+          <div class="three">Phone</div>
+          <div class="three">Nothing
+             <div class="four">Book</div>
+             <div class="four">School</div>
+          </div>
+      </div>
+      <div class="two">Note
+          <div class="three">Human
+              <div class="four">Code</div>
+              <div class="four">Operate</div>
+              <div class="four">Man</div>
+          </div>
+          <div class="three">Program
+               <div class="four">Bement
+                   <div class="five">Cat</div>
+               </div>
+               <div class="four">Grass</div>
+          </div>
+      </div>
+      <div class="two">Fish</div>
+   </div>
+   </section>
+   <section>
+      <label>请输入想查询的：<input id="input" type="text" name=""></label>
+      <input type="button" id="search" value="查询">
+      <input type="button" id="order" value="遍历">
+    </section>
+    <section>
+      <input type="button" id="delete" value="删除当前选中节点">
+      <label>请输入需要添加的节点<input id="addnode" type="text" name=""></label>
+      <input type="button" id="add" value="添加当前节点">
+    </section>
+
+
+   <script type="text/javascript">
+    
+    var search=document.getElementById("search");
+    var order=document.getElementById("order");
+    var treeNode=document.getElementsByClassName("one")[0];
+    var list=[];
+    var timer=null;
+
+
+    function Order(node){//层次遍历树中的每一个节点
+    	if(node!=null){
+            list.push(node);
+            for(var i=0;i<node.children.length;i++){
+            	if(node.children[i].nodeType==1){//判断该节点是否是元素类型，只有类型，nodeType的值为1
+            		Order(node.children[i]);
+            	}
+            }
+    	}
+    }
+    //改变list中的块颜色，参数a用来判断是否带有查询功能
+    //a=1，则查询
+    //a=0，则只遍历
+    function show(a){
+       var i=0;
+       list[i].style.backgroundColor="#fff";
+       var input=document.getElementById("input").value;
+       timer=setInterval(function(){
+          i++;
+          if(i<=list.length){
+            var content=list[i-1].firstChild.nodeValue.replace(/(^\s*)|(\s*$)/g,"");//将节点值的前后空格去掉
+              if(input==content&&a==1&&content){
+                if(i>=2){//将上一个节点变为白色
+                  list[i-2].style.backgroundColor="#fff";
+                }
+                for(var j=0;j<list[i-1].children.length;j++){//将当前节点的子节点变为白色
+                  list[i-1].children[j].style.backgroundColor="#fff";
+                }
+                list[i-1].style.backgroundColor="red";//设置当前匹配到查找内容的节点为红色
+                alert("已经查到");
+                a=2;
+              }else{
+                if(i>=2){
+                  list[i-2].style.backgroundColor="#fff";
+                }
+                for(var j=0;j<list[i-1].children.length;j++){
+                  list[i-1].children[j].style.backgroundColor="#fff";
+                }
+                list[i-1].style.backgroundColor="blue";
+              }
+          }else{
+            clearTimeout(timer);
+            list[list.length-1].style.backgroundColor="#fff";
+            if(a==1){
+              alert("not found!");
+            }
+          }
+       },500);
+    }
+    //重置函数，将数组重置
+    function reset(){
+      clearTimeout(timer);
+      list=[];
+      var divs=document.getElementsByTagName("div");
+      for(var i=0;i<divs.length;i++){
+        divs[i].style.backgroundColor="#fff";
+      }
+    }
+    //查询函数
+    search.addEventListener("click",function(){
+      reset();
+      Order(treeNode);
+      show(1);
+    })
+ //深度遍历
+   order.addEventListener("click",function(){
+      reset();
+      Order(treeNode);
+      show(0);
+    })
+   document.getElementById("content").addEventListener("click",function(e){
+      var target=e.target;//获取事件点击元素
+      if(target.nodeName!="DIV")
+            return;
+      target.style.backgroundColor="pink";//设置点击的元素为粉色
+      document.getElementById("delete").onclick=function(){
+            target.parentNode.removeChild(target);
+            reset();
+      }
+      document.getElementById("add").onclick=function(){
+            var insert=document.getElementById("addnode").value;
+            var node=document.createElement("div");
+            node.innerHTML=insert;
+            node.style.border="1px solid black";
+            target.appendChild(node);
+            reset();
+      }
+   })
+   
+ 
+
+
+
+
+   </script>
+</body>
+</html>
