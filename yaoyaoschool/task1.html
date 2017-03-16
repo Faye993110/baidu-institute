@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task1</title>
+	<style type="text/css">
+      div{
+      	margin: 100px;
+      }
+      p{
+      	font-size: 8px;
+      	margin-left:60px; 
+        margin-top:-1px;
+        
+      }
+      button{
+      	background-color: rgb(48,119,181);
+      	border-style: none;
+      	color: white;
+      	border-radius: 2px;
+      }
+      input{
+      	border: 1px solid #807A7A;
+      	border-radius: 2px;
+      }
+	</style>
+</head>
+<body>
+   <form name="form1" method="post" action="#">
+      <div>
+           <label for="name">名称：</label>
+           <input type="text" name="user_name1" id="name">
+           <button type="submit" id="test">验证</button>
+           <p id="result"></p> 
+      </div>
+   </form>
+
+<script type="text/javascript">
+//验证输入
+ var nam=document.getElementById("name");
+ var result=document.getElementById("result");
+ var test=document.getElementById("test");
+
+ //初始状态
+ function origin() {
+ 	// body...
+ 	result.innerHTML="";
+ 	result.style.color="red";
+ 	
+ }
+ //验证
+test.addEventListener("click",function(e){
+      
+      var length=checkLength(nam.value);
+      if(length<4||length>16){
+      	result.innerHTML="字符长度为4~16个，一个汉字算两个字符";
+      	result.style.color="#1851BE";
+      	input.focus();
+      	
+      }
+      if(!/^[a-z0-9A-Z\u4E00-\u9FA5]+$/.test(nam.value)){
+      	result.innerHTML="只能输入中文或者数字";
+      	result.style.color="#FF0A00";
+      	
+      }
+      if(/^[a-z0-9A-Z\u4E00-\u9FA5]+$/.test(nam.value)&&length>=4&&length<=16){
+      	result.innerHTML="验证成功";
+      	result.style.color="#0DE330";
+      }
+      if(nam.value==""){
+      	result.innerHTML="名称不能为空";
+      	result.style.color="#F60B14";
+      }
+      e.preventDefault();
+      return false;
+});
+
+//检验输入了多少个字符
+
+function checkLength(str){
+	var len=0,temp=0;
+	for(var i=0;i<str.length;i++){
+		temp=1;
+		if(/^[\u4E00-\u9FA5]+$/.test(str[i]))
+			temp=2;
+        len+=temp;
+	}
+	return len;
+}
+</script>
+</body>
+</html>
