@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task2</title>
+	<style type="text/css">
+    form{
+    	margin:auto;
+    	width: 600px;
+    }
+    div{
+    text-align: right;
+    margin: 20px 20px 20px 0px;
+    
+    }
+    div input{
+    	width: 400px;
+        height: 25px;
+        border-radius: 3px;
+        border-style: none;
+        border:1px solid #706868;
+        margin-left: 20px;
+    }
+    button{
+    	border-radius: 2px;
+    	border-style: none;
+    	background-color: #345FC2;
+    	color: white;
+    	width:60px;
+    	height: 30px;
+    }
+    p{
+    	font-size: 12px;
+    	margin-left: -100%;
+    	margin-top:-1px;
+    }
+	</style>
+</head>
+<body>
+   <form id="form">
+      <div><label>名称</label><input type="text" name="" id="input1"><p id="result1"></p></div>
+      <div><label>密码</label><input type="password" name="" id="pw1"><p id="result2"></p></div>
+      <div><label>密码确认</label><input type="password" name="" id="pw2"><p id="result3"></p></div>
+      <div><label>邮箱</label><input type="text" name="" id="email"><p id="result4"></p></div>
+      <div><label>手机</label><input type="text" name="" id="phonenum"><p id="result5"></p></div>
+      <div><button type="submit" id="submit">提交</button></div>
+   </form>
+</body>
+
+<script type="text/javascript">
+function $(id){
+	return document.getElementById(id);
+}
+
+//获取form表单的输入焦点id;然后对当前id对应的对话框进行操作
+$("form").addEventListener("click",function(e){
+	var id=e.target.id;
+	switch(id){
+		case "input1":{
+		    $("result1").innerHTML="必填，长度为4~16字符";
+		    $("result1").style.color="#D82626";
+		    $("input1").onblur=function(){//当输入框失去焦点时，进行校验
+		    	testName($('input1').value);
+		    };
+		    break;
+		}
+		case "pw1":{
+		    $("result2").innerHTML="必填，长度为8~16字符,系能";
+		    $("result2").style.color="#D82626";
+		    $("pw1").onblur=function(){
+		    	testPw1($('pw1').value);
+		    };
+		    break;
+		}
+		case "pw2":{
+		    $("result3").innerHTML="再次输入相同密码";
+		    $("result3").style.color="#D82626";
+		    $("pw2").onblur=function(){
+		    	testPw2($('pw2').value);
+		    };
+		    break;
+		}
+		case "email":{
+		    $("result4").innerHTML="请输入有效邮箱地址";
+		    $("result4").style.color="#D82626";
+		    $("email").onblur=function(){
+		    	testEmail($('email').value);
+		    };
+		    break;
+		}
+		case "phonenum":{
+		    $("result5").innerHTML="请填写正确的手机号码";
+		    $("result5").style.color="#D82626";
+		    $("phonenum").onblur=function(){
+		    	testPhonenum($('phonenum').value);
+		    };
+		    break;
+		}
+	}
+})
+
+function testName(str){
+	var reg=/^[0-9a-zA-Z\u4E00-\u9FA5]+$/;
+	var length=checkLength(str);
+	if(reg.test(str)&&length>=4&&length<=16){
+		$('result1').innerHTML="验证成功";
+		$('result1').style.color="#12F21B";
+		return true;
+	}else{
+		return false;
+	}
+
+}
+function testPw1(str){
+   var reg=/^[0-9a-zA-Z]+$/; 
+   if(reg.test(str)&&str.length>=8&&str.length<=16){
+   	     $("result2").innerHTML="密码可用";
+   	     $("result2").style.color="#12F21B";
+   	     return true;
+   }else{
+   	return false;
+   }
+
+}
+function testPw2(str){
+  if($("pw1").value==str&&(str!="")){
+  	$("result3").innerHTML="密码一致";
+  	$("result3").style.color="#12F21B";
+  	return true;
+  }else{
+  	return false;
+  }
+
+}
+function testEmail(str){
+  var reg=/\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+  if(reg.test(str)){
+  	$("result4").innerHTML="邮箱可用";
+  	$("result4").style.color="#12F21B";
+  	return true;
+  }else{
+  	$("result4").innerHTML="邮箱填写不正确";
+  	$("result4").style.color="#D82626";
+  	return false;
+  }
+}
+function testPhonenum(str){
+	var reg=/^1[345678]\d{9}$/;
+	if(reg.test(str)){
+	$("result5").innerHTML="手机填写正确";
+  	$("result5").style.color="#12F21B";
+  	 return true;
+	}else{
+	$("result5").innerHTML="手机填写不正确";
+  	$("result5").style.color="#D82626";
+  	return false;
+	}
+
+}
+function checkLength(str){
+	var temp=0,len=0;
+	for(var i=0;i<str.length;i++){
+		temp=1;
+		if(/^[\u4E00-\u9FA5]+$/.test(str[i])){
+			temp=2;
+		}
+		len+=temp;
+	}
+	return len;
+}
+$("submit").addEventListener("click",function(e){
+	if(testName($("input1").value)&&testPw1($("pw1").value)&&testPw2($("pw2").value)&&testEmail($("email").value)&&testPhonenum($("phonenum").value)){
+		alert("提交成功！");
+	}else{
+		alert("请正确填写");
+	}
+	e.preventDefault();
+	return false;
+})
+</script>
+</html>
