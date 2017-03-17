@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task3</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+       #choice{
+       	text-align: center;
+       	margin-top: 200px;
+       }
+       #choice input:first-child{
+       	 margin-left: -100px;
+       }
+       #choice input:last-child{
+       	margin-left:50px;
+       }
+       #inschool{
+       	text-align: center;
+       	margin-left: -100px;
+        margin-top: 40px;
+        display: none;
+       }
+       #inschool label{
+       	margin-left: 150px;
+       	margin-right: 20px;
+       }
+       #inschool select{
+       	width: 200px;
+       	margin-right: 20px;
+       }
+        #outshcool{
+        text-align: center;
+       	margin-left: -100px;
+       	margin-top: 40px;
+       	display: none;
+        }
+         #outshcool label{
+         	margin-right: 20px;
+         	
+         }
+	</style>
+</head>
+<body>
+  <div id="wrapper">
+      <div id="choice">
+	      <input type="radio" name="school" id="student">在校生
+	      <input type="radio" name="school" id="nostudent">非在校生
+      </div>
+      <div id="inschool">
+          <label>学校</label>
+          <select id="city">
+			   <option id="bj" class="opt">北京</option>
+			   <option id="sh" class="opt">上海</option>
+			   <option id="wh" class="opt">武汉</option>
+			   <option id="sz" class="opt">深圳</option>
+          </select>
+          <select id="collage">
+	            <option>北京大学</option>
+	            <option>清华大学</option>
+	            <option>人民大学</option>
+	            <option>师范大学</option>
+           </select>
+      </div>
+      <div id="outshcool">
+          <label>就业单位</label>
+          <input type="text" name="">
+      </div>
+  </div>
+
+
+  <script type="text/javascript">
+     function $(id){
+     	return document.getElementById(id);
+     }
+    //select the student in school
+     $("student").addEventListener("click",function(){
+     	$("outshcool").style.display="none";
+     	$("inschool").style.display="block";
+     });
+   //select the student out school
+     $("nostudent").addEventListener("click",function(){
+        $("inschool").style.display="none";
+     	$("outshcool").style.display="block";
+     });
+
+  var data={
+  	bj:["北京大学","清华大学","人名大学","师范大学"],
+  	sh:["上海大学","复旦大学","交通大学","同济大学"],
+  	wh:["华中科技","武汉大学","中南财经","地质大学"],
+  	sz:["深圳大学","中山大学","广东大学","东莞大学"]
+  }
+
+ //城市选项改变时触发的事件
+ $("city").addEventListener("change",change);
+
+//二级联动表单，一次循环,用了selectedIndex
+var options=document.getElementsByClassName("opt");
+/*function change(){
+	var id=options[$("city").selectedIndex].getAttribute("id"),
+	content="";
+	for(var i=0;i<data[id].length;i++){
+		content+="<option>"+data[id][i]+"</option>";
+	}
+	$("collage").innerHTML=content;
+}*/
+
+//二级联动表单，用了两次循环
+function change(){
+	for(var i=0;i<options.length;i++){
+		if(options[i].selected){
+			var id=options[i].getAttribute("id");
+		    var content="";
+			for(var j=0;j<data[id].length;j++){
+               content+="<option>"+data[id][j]+"</option>";
+			}
+			$("collage").innerHTML=content;
+		}
+	}
+}
+
+  </script>
+</body>
+</html>
