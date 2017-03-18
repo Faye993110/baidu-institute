@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>task4</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+       .wrapper{
+       	text-align: center;
+       }
+       #content{
+       	width: 450px;
+       	height: 450px;
+       	border: 2px solid black;
+       }
+       ul{
+       	list-style: none;
+       }
+       #top{
+       	height: 30px;
+       	line-height:30px;
+       	clear:both;
+       	margin-left: 38px;
+       }
+       #top li{
+       	float: left;
+       	margin-right: 35px;
+       }
+       #content{
+       	display: flex;
+       	flex-direction: row;
+       	flex-wrap: wrap;
+       }
+       #content div{
+       	box-sizing: border-box;
+        width: 45px;
+        height: 45px;
+        border:1px solid #958A8A;
+       }
+       #right{
+       	float: left;
+       }
+       #right li{
+       	margin-bottom:23px;
+       }
+       #go{
+       	float: left;
+       	margin-top: 20px;
+       }
+       .rectangle{
+          width: 40px;
+          height: 28px;
+          background-color: #310CF0;
+          border-top: 12px solid #CD0911;
+       }
+       .box1{
+       	display: block;
+       	box-sizing:border-box;
+       	width: 43px; 
+       	height: 12px;
+       	background-color: red;
+       }
+       .box2{
+        display: block;
+       	box-sizing:border-box;
+       	width: 12px; 
+       	height: 43px;
+       	background-color: red;
+       }
+       .box3{
+        display: block;
+       	box-sizing:border-box;
+       	width: 43px; 
+       	height: 12px;
+       	background-color: red;
+       	margin-top: 31px;
+       }
+       .box4{
+        display: block;
+       	box-sizing:border-box;
+       	width: 12px; 
+       	height: 43px;
+       	background-color: red;
+       	margin-left: 31px;
+       }
+         #go li{
+         	text-align: left;
+         	margin-left: 100px;
+         }
+	</style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="top">
+	       <ul>
+	       	<li>1</li>
+	       	<li>2</li>
+	       	<li>3</li>
+	       	<li>4</li>
+	       	<li>5</li>
+	       	<li>6</li>
+	       	<li>7</li>
+	       	<li>8</li>
+	       	<li>9</li>
+	       	<li>10</li>
+	       </ul>
+       </div>
+        <div id="right">
+	       <ul>
+	       	<li>1</li>
+	       	<li>2</li>
+	       	<li>3</li>
+	       	<li>4</li>
+	       	<li>5</li>
+	       	<li>6</li>
+	       	<li>7</li>
+	       	<li>8</li>
+	       	<li>9</li>
+	       	<li>10</li>
+	       </ul>
+       </div>
+       <div id="content">
+
+       </div>
+      
+       <div id="go">
+            <ul>
+	           	<li>GO：向蓝色边所面向的方向前进一格（一格等同于正方形的边长）</li>
+	           	<li>TUN LEF：向左转（逆时针旋转90度）</li>
+	           	<li>TUN RIG：向右转（顺时针旋转90度）</li>
+	           	<li>TUN BAC：向右转（旋转180度）</li>
+           </ul>
+           <label>请输入正确的英文指令： </label>
+           <input type="text" id="input" name="">
+           <input type="button" id="execute" name="" value="执行">
+       </div>
+    </div>
+
+    <script type="text/javascript">
+       //页面加载就画好棋盘，与随机生成一个方块
+     window.onload=function(){
+     	var content="";
+     	for(var i=0;i<100;i++){
+     		content+="<div id='"+i+"'></div>";
+     	}
+     	document.getElementById("content").innerHTML=content;
+     	var n=Math.floor(Math.random()*100);
+     	var id=n+"";
+     	var a=document.getElementById(id);
+     	a.style.backgroundColor="#310CF0";
+     	a.innerHTML="<span class='box1'></span>";
+     };
+   
+     var ex=document.getElementById("execute");
+      
+     ex.addEventListener("click",function(){
+     	var span=document.getElementsByTagName("span")[0];//获取span元素
+     	var ymin=document.getElementById("content").offsetTop;//方块的y轴最小值
+     	var coloreddiv=span.parentElement;//span的父元素的div
+     	var id=coloreddiv.getAttribute("id");//span的父元素的div的id
+     	var idy=coloreddiv.offsetTop;//当前方块的y轴
+     	var input=document.getElementById("input");//输入的指令
+     	switch(input.value){
+     		case "GO":{
+                 if(idy>(ymin+10)){
+                     coloreddiv.innerHTML="";
+                     coloreddiv.style.backgroundColor="#fff";
+                     var n=parseInt(id)-10+"";
+                     document.getElementById(n).innerHTML="<span class='box1'></span>";
+                     document.getElementById(n).style.backgroundColor="#310CF0";
+                 }else{
+                 	alert("已经到达最顶端！");
+                 }
+                 break;
+     		}
+     		case "TUN LEF":{
+     			 if(span.className=="box1"){
+     			 	coloreddiv.innerHTML="<span class='box2'></span>";
+     			 }else if(span.className=="box2"){
+     			 	coloreddiv.innerHTML="<span class='box3'></span>";
+     			 }else if(span.className=="box3"){
+                    coloreddiv.innerHTML="<span class='box4'></span>";
+     			 }else if(span.className=="box4"){
+                    coloreddiv.innerHTML="<span class='box1'></span>";
+     			 }
+                 break;
+
+     		}
+     		case "TUN RIG":{
+     			 if(span.className=="box1"){
+     			 	coloreddiv.innerHTML="<span class='box4'></span>";
+     			 }else if(span.className=="box2"){
+     			 	coloreddiv.innerHTML="<span class='box1'></span>";
+     			 }else if(span.className=="box3"){
+                    coloreddiv.innerHTML="<span class='box2'></span>";
+     			 }else if(span.className=="box4"){
+                    coloreddiv.innerHTML="<span class='box3'></span>";
+     			 }
+                 break;
+     		}
+     		case "TUN BAC":{
+     			 if(span.className=="box1"){
+     			 	coloreddiv.innerHTML="<span class='box3'></span>";
+     			 }else if(span.className=="box2"){
+     			 	coloreddiv.innerHTML="<span class='box4'></span>";
+     			 }else if(span.className=="box3"){
+                    coloreddiv.innerHTML="<span class='box1'></span>";
+     			 }else if(span.className=="box4"){
+                    coloreddiv.innerHTML="<span class='box2'></span>";
+     			 }
+                 break;
+     		}
+     		default:{
+     			alert("指令输入错误");
+     			break;
+     		}
+     	}
+     })
+    
+  
+    </script>
+</body>
+</html>
