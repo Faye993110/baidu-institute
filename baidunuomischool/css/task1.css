@@ -1,0 +1,103 @@
+#main{
+	background:url(../image/task1/background1.jpg) no-repeat;
+	margin: 100px auto;
+	width: 400px;
+	height: 300px;
+	
+	position: relative;
+}
+#main:hover {
+	opacity: 0.6;
+}
+#content{
+	position: absolute;
+	text-align: center;
+	top: 70px;
+	left: 25px;
+	width:350px;
+	height: 160px;
+    background:hsla(0,14%,90%,0.3);
+    visibility: hidden;
+}
+#content p:first-child{
+
+	font-size: 40px;
+	line-height: 50px;
+}
+#content::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 0px;
+  
+  box-sizing: border-box;
+  border:3px solid white;
+  border-width: 0px 3px;
+  visibility: visible;
+  transition: all 1s;
+}
+#content::after{
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 0px;
+  height: 100%;
+
+  box-sizing: border-box;
+  border:3px solid white;
+  border-width: 3px 0;
+  visibility: visible;
+  transition: all 1s;
+}
+#main:hover #content{
+	visibility: visible;
+}
+#main:hover #content::before{
+	height: 100%;
+	visibility: visible;
+	top: 0px;
+}
+
+#main:hover #content::after{
+	width: 100%;
+	visibility: visible;
+	left: 0px;
+}
+
+#content p:first-child{
+	/* 渐变背景，此处为能无缝拼接的渐变*/
+	background-image: -webkit-linear-gradient(left,#3498db 0%, #f47920 10%, #d71345 20%, #f7acbc 30%, #ffd400 40%, #3498db 50%, #f47920 60%, #d71345 70%, #f7acbc 80%, #ffd400 90%, #3498db);
+    /* 文字填充色为透明*/
+    color: transparent;
+    -webkit-text-fill-color:transparent;
+
+    /*背景剪裁为文字，相当于用背景填充文字*/
+    -webkit-background-clip:text;
+    -webkit-animation:first-animation 4s infinite linear;
+    background-size: 200% 100%;
+}
+
+#content P:last-child{
+	font-weight:bold;
+	-webkit-animation:change-animation 4s infinite linear;
+}
+@keyframes first-animation{
+	from{
+		background-position:0% 0%;
+	}
+	to{
+		background-position: -100% 0%;
+	}
+}
+
+@keyframes change-animation{
+	10% {color:#ff6699;} 
+	20% {color:#ffff00;}
+	30% {color:#ff6699;}
+	40% {color:#ffff00;}
+	60% {color:#ff6699;}
+	70% {color:#ffff00;}
+}
