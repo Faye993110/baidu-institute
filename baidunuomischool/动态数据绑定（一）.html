@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>动态数据绑定一</title>
+	<meta charset="utf-8">
+</head>
+<body>
+
+
+<script type="text/javascript">
+   
+//观察者，构造函数
+   function Observer(data){
+   	this.data=data;
+   	this.walk(data);
+   }
+
+      //此函数用于深层次遍历对象的各个属性
+   //采用的是递归的思路
+   //因为我们要为对象的每一个属性绑定getter和setter
+   Observer.prototype.walk=function(obj){
+     let val; 
+     for(let key in obj){
+     	//用hasOwnProperty进行过滤，因为for....in循环会把对象原型链上所有可枚举属性都循环出来
+     	//但是我们仅需要这个对象本身所需要的属性
+     	if (obj.hasOwnProperty(key)) {
+             val=obj[key];
+             if(typeof val==="object"){
+             	new Observer(val);
+             }
+             this.convert(key,val);
+     	}
+     }
+   };
+  Observer.prototype.convert=function(key,val){
+  	Object.defineProperty(this.data,key,{
+  		enumerable:true,
+  		configurable:true,
+  		get:function(){
+  			alert("你访问了"+key);
+  			return val;
+  		},
+  		set:function(newVal){
+  			alert("你设置了"+key);
+  			alert("新的"+key+"="+newVal);
+  			if(newVal===val) return;
+  			val=newVal;
+  		}
+  	})
+  };
+  let app1=new Observer({
+  	name:"youngwind",
+  	age:25
+  });
+  let app2=new Observer({
+  	university:"chongda",
+  	major:"computer"
+  });
+ 
+
+</script>
+</body>
+</html>
