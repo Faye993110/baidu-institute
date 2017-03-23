@@ -1,0 +1,44 @@
+*{
+	font-family: "微软雅黑";
+	font-size: 24px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+body{
+	text-align: center;
+	margin: 0;
+	height: 2000px;
+}
+#btnLogin{
+	border-radius: 5px;
+	width: 200px;
+	height: 40px;
+	outline: none;
+	margin-top: 50px;
+}
+#divFloat{
+	padding: 20px;
+	border:1px solid black;
+	text-align: left;
+	border-radius: 10px;
+	background-color: rgb(240,240,240);
+
+
+}
+#divFloat form{
+	text-align: right;
+}
+#divFloat form input{
+	width: 90px;
+	color: white;
+}
+#divFloat form input:first-child {
+    background-color: rgb(34, 185, 60);
+}
+
+#divFloat form input:last-child {
+    background-color: rgb(204, 85, 92);
+}
