@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UI 组件之排序表格</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+    *{
+    	padding: 0;
+    	margin: 0;
+    }
+    table{
+    	text-align: center;
+    	border-collapse: collapse;
+    	margin: 50px;
+    }
+	</style>
+</head>
+<body>
+     <table id="tab"></table>
+</body>
+<script type="text/javascript">
+    (function() {
+    	// body...
+    	var config={
+    		tdWidth:'150px',
+    		tdHeight:'55px',
+    		rowNum:'5',
+    		colNum:'5',
+    		thBgc:'#333',
+    		border:'1px solid #ccc',
+    		thContent:['姓名','语文','数学','英语','总分'],
+    		trContent:[
+                         ['小明',80,90,70,240],
+					     ['小红',90,60,90,240],
+					     ['小亮',60,100,70,230],
+					     ['小强',100,70,80,250],
+    		          ],
+    	},
+    	tab=document.getElementById('tab');
+        addTh();//添加表头
+        addTr();//添加行内容
+
+        function addTh(){
+        	var thNode=document.createElement("tr");
+        	thNode=addTd(thNode,config.thContent);
+            thNode.style.backgroundColor=config.thBgc;
+            thNode.style.color="#fff";
+        	tdList=thNode.childNodes;
+        	for(var i=1;i<tdList.length;i++){
+        		addArrowUp(tdList[i]);
+        		addArrowDown(tdList[i]);
+        	}
+        	tab.appendChild(thNode);
+
+        	function addArrowUp(tdNode){
+        		var divNode=document.createElement('div');
+                 tdNode.appendChild(divNode);
+                 divNode.style.position="absolute";
+                 divNode.style.width='0px';
+                 divNode.style.height='0px';
+                 divNode.style.cursor ="pointer";
+                 divNode.style.borderLeft="8px solid transparent";
+                 divNode.style.borderRight="8px solid transparent";
+                 divNode.style.borderBottom="10px solid #fff";
+                 divNode.style.top="15px";
+                 divNode.style.right="20px";
+
+                 divNode.addEventListener('click',function(e){
+                     var content=e.target.parentNode.innerHTML.split('<')[0];//获取选择的列
+                     var listNum=config.thContent.indexOf(content);
+                    
+                    
+                    var trContent=config.trContent;
+                    var min; 
+                    for(var i=0;i<trContent.length;i++){
+                    	for(var j=i+1;j<trContent.length;j++){
+                    		if(trContent[i][listNum]>trContent[j][listNum]){
+                                min=trContent[j];
+                                trContent[j]=trContent[i];
+                                trContent[i]=min;
+                    		}
+                    	}
+                    }
+                    removeTr();
+                    addTr();
+                    
+                 })
+        	}
+        	function addArrowDown(tdNode){
+        		var divNode=document.createElement('div');
+                 tdNode.appendChild(divNode);
+                 divNode.style.position="absolute";
+                 divNode.style.width='0px';
+                 divNode.style.height='0px';
+                 divNode.style.cursor ="pointer";
+                 divNode.style.borderLeft="8px solid transparent";
+                 divNode.style.borderRight="8px solid transparent";
+                 divNode.style.borderTop="10px solid #fff";
+                 divNode.style.top="30px";
+                 divNode.style.right="20px";
+
+                     divNode.addEventListener('click',function(e){
+                     var content=e.target.parentNode.innerHTML.split('<')[0];//获取选择的列
+                     var listNum=config.thContent.indexOf(content);
+                    
+                    
+                    var trContent=config.trContent;
+                    var max; 
+                    for(var i=0;i<trContent.length;i++){
+                    	for(var j=i+1;j<trContent.length;j++){
+                    		if(trContent[i][listNum]<trContent[j][listNum]){
+                                max=trContent[j];
+                                trContent[j]=trContent[i];
+                                trContent[i]=max;
+                    		}
+                    	}
+                    }
+                    removeTr();
+                    addTr();
+                    
+                 })
+        	}
+
+        }
+         function addTd(rowNode,contentList){
+            for(var i=0;i<contentList.length;i++){
+            	var td=document.createElement('td');
+            	td.innerHTML=contentList[i];
+            	td.style.width=config.tdWidth;
+            	td.style.height=config.tdHeight;
+            	td.style.border=config.border;
+            	td.style.position="relative";
+            	rowNode.appendChild(td);
+            }
+            return rowNode;
+         }
+
+        function addTr(){
+        	var trNode;
+        	for(var i=0;i<config.trContent.length;i++){
+        	    trNode=document.createElement('tr');
+        	    trNode=addTd(trNode,config.trContent[i]);
+        	    tab.appendChild(trNode);
+        	}
+        }
+        function removeTr(){
+        	var trs=document.getElementsByTagName("tr");
+        	for(var i=config.rowNum-1;i>0;i--){
+        		tab.removeChild(trs[i]);
+        	}
+        }
+
+    }());
+</script>
+</html>
