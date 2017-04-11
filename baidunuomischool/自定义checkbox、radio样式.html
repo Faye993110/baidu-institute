@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>自定义check、radio</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+
+    input{
+    	display: none;
+    }
+    /*伪元素实现*/
+    .checkbox label{
+    	display: inline-block;
+    	width: 16px;
+    	height: 16px;
+    	border:1px solid #d9d9d9;
+    	position: relative; 
+    }
+    .checkbox label::after{
+    	content: "";
+    	position: absolute;
+    	width: 9px;
+    	height: 5px;
+    	top: 3px;
+    	left: 3px;
+    }
+    .radio label{
+    	display: inline-block;
+    	width: 16px;
+    	height: 16px;
+    	border: 1px solid #d9d9d9;
+    	border-radius: 50%;
+    	position: relative;
+    	margin-top: 20px;
+    }
+    .radio label::after{
+    	content: "";
+    	cursor: pointer;
+    	position: absolute;
+    	width: 8px;
+    	height: 8px;
+    	border-radius: 50%;
+    	top: 4px;
+    	left: 4px;
+    	z-index: 1;
+    }
+
+    /*选中时状态改变*/
+    .radio input[type=radio]:checked+label::after{
+       background: #d73d32;
+    }
+    .radio input[type=radio]:checked+label{
+       border:1px solid #d73d32;
+    }
+    .checkbox input[type=checkbox]:checked+label::after{
+    	border:2px solid #d73d32;
+    	border-top: none;
+    	border-right:none;
+    	transform: rotate(-45deg);
+    	-webkit-transform:rotate(-45deg);
+    	-moz-transform:rotate(-45deg);
+    	-o-transform:rotate(-45deg);
+    	-ms-transform:totate(-45deg);
+    }
+    .checkbox input[type=checkbox]:checked+label{
+    	border:1px solid #d73d32;
+    }
+
+    /*雪碧图的实现*/
+   .checkbox1 label,.radio1 label{
+   	display:inline-block;
+   	width: 16px;
+   	height: 16px;
+   	border: none;
+   	background: url('pic.png') no-repeat;
+   }
+   .checkbox1 label{
+     background-position: -25px -32px; 
+   }
+   .radio1 label{
+   	background-position: -24px -10px;
+   }
+   .checkbox1 input[type=checkbox]:checked+label{
+   	background-position:-60px -32px;
+   }
+   .radio1 input[type=radio]:checked+label{
+   	background-position: -59px -10px;
+   }
+	</style>
+</head>
+<body>
+    <div id="wrapper">
+         <h2>伪元素实现 ：</h2>
+         <div class="checkbox">
+             <input type="checkbox" name="" id="checkbox" class="checkBox">
+             <label for="checkbox"></label>
+         </div>
+         <div class="radio">
+             <input type="radio" name="sex"  id="radioBox" class="radios">
+             <label for="radioBox"></label>
+             <input type="radio" name="sex" id="radioBox1" class="radios">
+             <label for="radioBox1"></label>
+         </div>
+         <h2>雪碧图实现：</h2>
+         <div class="checkbox1">
+            <input type="checkbox" name="" id="checkBox_sprit" class="checkBox_sprit">
+            <label for="checkBox_sprit"></label>
+         </div>
+         <div class="radio1">
+             <input type="radio" name="sex1" id="radioBox_sprit" class="radioBox_sprit">
+             <label for="radioBox_sprit"></label>
+             <input type="radio" name="sex1" id="radioBox1_sprit" class="radioBox_sprit">
+             <label for="radioBox1_sprit"></label>
+         </div>
+    </div>
+</body>
+</html>
