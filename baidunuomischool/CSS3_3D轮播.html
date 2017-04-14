@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>3D轮播</title>
+  <style type="text/css">
+       #wrapper{
+       	
+        -webkit-perspective:1000;
+        -webkit-perspective-origin:50% 50%;
+       }
+       #cube{
+        width:435px;
+       	height: 200px;
+        -webkit-transform-style:preserve-3d;
+        position:relative;
+        margin:200px auto;
+        -webkit-animation:thd 15s linear infinite;
+
+       }
+       img{
+       	position: absolute;
+       	width: 300px;
+       	height: 200px;
+       }
+       #img1{
+        -webkit-transform:translateZ(300px);
+       }
+        #img2{
+        -webkit-transform:rotateY(72deg) translateZ(300px);
+       }
+        #img3{
+        -webkit-transform:rotateY(144deg) translateZ(300px);
+       }
+        #img4{
+        -webkit-transform:rotateY(216deg) translateZ(300px);
+       }
+        #img5{
+        -webkit-transform:rotateY(289deg) translateZ(300px);
+       }
+       
+        @-webkit-keyframes thd{
+        0%{
+          -webkit-transform:rotateY(0deg) ;
+        }
+        5%{
+        -webkit-transform:rotateY(0deg) ;
+        }
+        20%{
+        	-webkit-transform:rotateY(72deg) ;
+        }
+        25%{
+        	-webkit-transform:rotateY(72deg) ;
+        }
+         40%{
+        	-webkit-transform:rotateY(144deg) ;
+        }
+        45%{
+        	-webkit-transform:rotateY(144deg) ;
+        }
+         60%{
+        	-webkit-transform:rotateY(216deg) ;
+        }
+        65%{
+        	-webkit-transform:rotateY(216deg) ;
+        }
+         80%{
+        	-webkit-transform:rotateY(289deg) ;
+        }
+        85%{
+        	-webkit-transform:rotateY(289deg) ;
+        }
+        100%{
+          -webkit-transform:rotateY(360deg) ;
+        }
+       }
+  </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="cube">
+           <img id="img1" src="images/1.jpg">
+           <img id="img2" src="images/2.jpg">
+           <img id="img3" src="images/3.jpg">
+           <img id="img4" src="images/5.jpg">
+           <img id="img5" src="images/6.jpg">
+        </div>
+    </div>
+</body>
+</html>
